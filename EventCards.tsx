@@ -2,107 +2,95 @@ import React from 'react';
 import { View, ScrollView, StyleSheet, Image } from 'react-native';
 import { Text, Card, Button, Icon } from 'react-native-elements';
 
-const users = [
-{
-  name: 'brynn',
-  avatar: 'https://uifaces.co/our-content/donated/1H_7AxP0.jpg',
-},
-{
-  name: 'thot leader',
-  avatar:
-    'https://images.pexels.com/photos/598745/pexels-photo-598745.jpeg?crop=faces&fit=crop&h=200&w=200&auto=compress&cs=tinysrgb',
-},
-{
-  name: 'jsa',
-  avatar: 'https://uifaces.co/our-content/donated/bUkmHPKs.jpg',
-},
-{
-  name: 'talhaconcepts',
-  avatar: 'https://randomuser.me/api/portraits/men/4.jpg',
-},
-{
-  name: 'andy vitale',
-  avatar: 'https://uifaces.co/our-content/donated/NY9hnAbp.jpg',
-},
-{
-  name: 'katy friedson',
-  avatar:
-    'https://images-na.ssl-images-amazon.com/images/M/MV5BMTgxMTc1MTYzM15BMl5BanBnXkFtZTgwNzI5NjMwOTE@._V1_UY256_CR16,0,172,256_AL_.jpg',
-},
-];
-
 
 type CardsComponentsProps = {};
+type CardsContentProps = {
+  eventName: string,
+  eventDate:string,
+  eventImgSrc?:string,
+  defaultColor?:string
+  eventAttendenceStatus:string
+};
+
+const cardContents = [
+  {
+    eventName: 'Turnt n Burnt',
+    eventDate: 'FRI, JUN 17 - SUN, JUN 19',
+    eventImgSrc: 'https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg',
+    eventAttendenceStatus: 'Going'
+  },
+  {
+    eventName: '4th of July',
+    eventDate: 'SAT JUL 2',
+    defaultColor: '#FE5F55',
+    // eventImgSrc: 'https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg',
+    eventAttendenceStatus: 'Going'
+  },
+  {
+    eventName: "Con and Joe's Birthday",
+    eventDate: 'SAT AUG 13',
+    defaultColor: '#4f6367',
+    // eventImgSrc: 'https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg',
+    eventAttendenceStatus: 'Going'
+  }
+]
 
 const EventCards: React.FunctionComponent<CardsComponentsProps> = () => {
 return (
   <>
     <ScrollView>
       <View style={styles.container}>
-        <Card>
-          <Card.Title>CARD WITH DIVIDER</Card.Title>
-          <Card.Divider />
-          {users.map((u, i) => {
-            return (
-              <View key={i} style={styles.user}>
-                <Image
-                  style={styles.image}
-                  resizeMode="cover"
-                  source={{ uri: u.avatar }}
-                />
-                <Text style={styles.name}>{u.name}</Text>
-              </View>
-            );
-          })}
-        </Card>
-        <Card containerStyle={{ marginTop: 15 }}>
-          <Card.Title>FONTS</Card.Title>
-          <Card.Divider />
-          <Text style={styles.fonts} h1>
-            h1 Heading
-          </Text>
-          <Text style={styles.fonts} h2>
-            h2 Heading
-          </Text>
-          <Text style={styles.fonts} h3>
-            h3 Heading
-          </Text>
-          <Text style={styles.fonts} h4>
-            h4 Heading
-          </Text>
-          <Text style={styles.fonts}>Normal Text</Text>
-        </Card>
-        <Card>
-          <Card.Title>HELLO WORLD</Card.Title>
-          <Card.Divider />
-          <Card.Image
-            style={{ padding: 0 }}
-            source={{
+      {cardContents.map((content: CardsContentProps)=> (
+        <Card containerStyle = {styles.card}>
+          { content.eventImgSrc 
+            ? 
+            (<Card.Image
+              style={{ padding: 0, borderBottomLeftRadius: 0,
+                borderBottomRightRadius:0,
+                borderTopLeftRadius: 25,
+                borderTopRightRadius: 25 }}
+              source={{
               uri:
-                'https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg',
-            }}
-          />
-          <Text style={{ marginBottom: 10 }}>
-            The idea with React Native Elements is more about component
-            structure than actual design.
+                content.eventImgSrc,
+              }}
+            />) 
+            : (<View style={{
+              backgroundColor: content.defaultColor,
+              width: '100%',
+              height: 150,
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius:0,
+              borderTopLeftRadius: 25,
+              borderTopRightRadius: 25
+            }}/>)
+          }
+          <Text style={{ margin: 3 }}>
+            {content.eventDate}
           </Text>
+          <Text style={{ margin: 3 }}>
+            {content.eventName}
+          </Text>
+          <View style={{width:'50%', padding:5, display: 'flex', justifyContent: 'flex-end' }} >
           <Button
-            icon={
-              <Icon
-                name="code"
-                color="#ffffff"
-                iconStyle={{ marginRight: 10 }}
-              />
-            }
+            // icon={
+            //   <Icon
+            //     name="code"
+            //     color="#ffffff"
+            //     iconStyle={{ marginRight: 10 }}
+            //   />
+            // }
             buttonStyle={{
-              borderRadius: 0,
+              borderRadius: 10,
               marginLeft: 0,
               marginRight: 0,
               marginBottom: 0,
             }}
-            title="VIEW NOW"
+            title="Going"
           />
+          </View>
         </Card>
+      ))}
+        
       </View>
     </ScrollView>
   </>
@@ -112,6 +100,7 @@ return (
 const styles = StyleSheet.create({
 container: {
   flex: 1,
+  minWidth: '100%'
 },
 fonts: {
   marginBottom: 8,
@@ -129,6 +118,19 @@ name: {
   fontSize: 16,
   marginTop: 5,
 },
+defaultColorDiv: {
+  backgroundColor: '#FE5F55',
+  width: '100%',
+  height: 150,
+  borderBottomLeftRadius: 0,
+ borderBottomRightRadius:0,
+ borderTopLeftRadius: 25,
+ borderTopRightRadius: 25
+},
+card: {
+borderRadius: 25,
+padding: 0
+}
 });
 
 export default EventCards;
