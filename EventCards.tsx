@@ -127,9 +127,6 @@ container: {
   flex: 1,
   minWidth: '100%'
 },
-fonts: {
-  marginBottom: 8,
-},
 user: {
   flexDirection: 'row',
   marginBottom: 6,
