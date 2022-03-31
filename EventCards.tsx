@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import { View, ScrollView, StyleSheet, Image } from 'react-native';
 import { Text, Card, Button, Icon } from 'react-native-elements';
 import { SelectCountry as StatusDropdown } from 'react-native-element-dropdown';
-import * as TNB from './assets/tnb.jpeg'
+import { color } from 'react-native-elements/dist/helpers';
+
 type CardsComponentsProps = {};
 type CardsContentProps = {
   eventName: string,
@@ -17,7 +18,7 @@ const cardContents = [
     id:1,
     eventName: 'Turnt n Burnt',
     eventDate: 'FRI, JUN 17 - SUN, JUN 19',
-    eventImgSrc: 'https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg',
+    defaultColor: '#4f6367',
     eventAttendenceStatus: 'Going'
   },
   {
@@ -25,7 +26,6 @@ const cardContents = [
     eventName: '4th of July',
     eventDate: 'SAT JUL 2',
     defaultColor: '#FE5F55',
-    // eventImgSrc: 'https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg',
     eventAttendenceStatus: 'Going'
   },
   {
@@ -33,28 +33,31 @@ const cardContents = [
     eventName: "Con and Joe's Birthday",
     eventDate: 'SAT AUG 13',
     defaultColor: '#4f6367',
-    // eventImgSrc: 'https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg',
     eventAttendenceStatus: 'Going'
   }
 ]
 
 const options = [{
   value: '1',
-  lable: 'Going'
+  label: 'Going'
 },
 {
   value: '2',
-  lable: 'Maybe'
+  label: 'Maybe'
 },
 {
   value: '3',
-  lable: 'Not Going'
+  label: 'Not Going'
 }]
 
 
 const EventCards: React.FunctionComponent<CardsComponentsProps> = (props) => {
 
-  const [response, setResponse] = useState('Respond');
+  const [response, setResponse] = useState({
+    1: 'Respond',
+    2: 'Going',
+    3: 'Going'
+  });
 
 return (
   <>
@@ -96,16 +99,18 @@ return (
             selectedTextStyle={styles.selectedTextStyle}
             placeholderStyle={styles.placeholderStyle}
             iconStyle={styles.iconStyle}
+            containerStyle={styles.containerStyle}
             maxHeight={130}
             value={response}
             data={options}
             valueField="value"
-            labelField="lable"
+            labelField="label"
             imageField=""
-            placeholder="Response"
+            placeholder={response[index+1]}
             onChange={e => {
-              setResponse(e.value);
+              setResponse({...response, [index+1]: e.label});
             }}
+            iconColor={'#E7ECEF'}
           />
           </View>
         </Card>
@@ -149,7 +154,8 @@ defaultColorDiv: {
 },
 card: {
 borderRadius: 25,
-padding: 0
+padding: 0,
+backgroundColor: '#E7ECEF'
 },
 text: {
   fontFamily: 'poppins-regular',
@@ -163,18 +169,25 @@ dropdown: {
   borderColor: 'gray',
   borderWidth: 0.5,
   borderRadius: 8,
+  backgroundColor: '#4f6367'
 },
 placeholderStyle: {
   fontSize: 16,
+  color: '#E7ECEF',
+  paddingLeft:10
 },
 selectedTextStyle: {
   fontSize: 16,
-  marginLeft: 8,
   fontFamily:'poppins-regular'
+
+},
+containerStyle:{
+ backgroundColor: '#E7ECEF',
+ borderRadius: 8
 },
 iconStyle: {
-  width: 20,
-  height: 20
+  width: 30,
+  height: 30
 }
 });
 
