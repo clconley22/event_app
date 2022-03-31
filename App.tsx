@@ -38,9 +38,11 @@ const  App = () => {
 
 const styles = StyleSheet.create({
   header: {
+    display: 'flex',
     height:'10%',
     backgroundColor: '#b8d8d8',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    paddingLeft: 10,
     justifyContent: 'center'
   },
   text: {
