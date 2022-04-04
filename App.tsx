@@ -1,21 +1,58 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState} from 'react'
+import { StyleSheet, Text, View, Platform } from 'react-native';
+import Tabs from './components/Tabs'
+import * as Font from 'expo-font'
+import AppLoading from 'expo-app-loading';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>YESSSS Got this shit running!</Text>
-      <Text>next step: plan app design</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const getFonts = () => Font.loadAsync({
+  'poppins-regular': require('./assets/fonts/Poppins-Regular.ttf'),
+  'poppins-bold': require('./assets/fonts/Poppins-Bold.ttf'),
+});
+
+
+const  App = () => {
+  const [fontsLoaded, setFontsLoaded] = useState(false)
+  if(fontsLoaded){
+    return (
+      <>
+       <View style={styles.header}>
+        <Text style={styles.text}>events</Text>
+      </View>
+        <Tabs/>
+      </>
+     
+      
+    );
+  } else {
+    return (
+    <AppLoading
+      startAsync={getFonts}
+      onFinish={()=>setFontsLoaded(true) }
+      onError={()=> console.log('error')}
+      />
+    )
+  }
+  
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  header: {
+    display: 'flex',
+    height:'10%',
+    backgroundColor: '#b8d8d8',
+    alignItems: 'flex-start',
+    paddingLeft: 10,
+    justifyContent: 'center'
+  },
+  text: {
+    fontFamily: 'poppins-regular',
+    top: 25,
+    margin: 3,
+    fontSize: 30,
+    color: '#4f6367',
+    fontWeight: 'bold'
   },
 });
+
+export default App
